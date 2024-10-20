@@ -33,6 +33,43 @@ const loginUser = asyncHandler(async (req, res) => {
     //2. 
 })
 
+const getAllUsers = asyncHandler(async (req, res) => {
+    try {
+        const users = await User.find()
+        res.status(200).json({ status: true, data: users })
+    } catch (error) {
+        throw new Error(error)
+    }
+})
+
+const getUser = asyncHandler(async (req, res) => {
+    try {
+        const { id } = req.params
+        console.log(id)
+        const user = await User.findById(String(id))
+        if (!user) {
+            throw new Error('User Not Found !')
+        }
+        return res.status(200).json({ status: true, data: user })
+    } catch (error) {
+        throw new Error(error)
+    }
+})
+
+const deleteUser = asyncHandler(async (req, res) => {
+    try {
+        const { id } = req.params
+        console.log(id)
+        const deletedUser = await User.findByIdAndDelete(String(id))
+        if (!deletedUser) {
+            throw new Error('User Not Found !')
+        }
+        return res.status(200).json({ status: true, data: deletedUser })
+    } catch (error) {
+        throw new Error(error)
+    }
+})
+
 module.exports = {
-    createUser, loginUser
+    createUser, loginUser, getAllUsers, getUser,deleteUser
 }
