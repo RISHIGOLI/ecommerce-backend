@@ -16,7 +16,8 @@ const UserSchema = new mongoose.Schema({
         unique: true
     },
     password: { type: String, required: true },
-    mobile: {type:Number}
+    mobile: { type: Number },
+    role: { type: String, default: "user" }
 })
 
 const User = mongoose.model('User', UserSchema)
