@@ -70,6 +70,20 @@ const deleteUser = asyncHandler(async (req, res) => {
     }
 })
 
+const updateUser = asyncHandler(async (req, res) => {
+    try {
+        const { id } = req.params
+        const updatedUser = await User.findByIdAndUpdate(String(id), req.body, { new: true, runValidations: true })
+        if (!updatedUser) {
+            res.status(404)
+            throw new Error('User Not Found !')
+        }
+        return res.status(201).json({ status: true, data: updatedUser })
+    } catch (error) {
+        throw new Error(error)
+    }
+})
+
 module.exports = {
-    createUser, loginUser, getAllUsers, getUser,deleteUser
+    createUser, loginUser, getAllUsers, getUser, deleteUser, updateUser
 }
